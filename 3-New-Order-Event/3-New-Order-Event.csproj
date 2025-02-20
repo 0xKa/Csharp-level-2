@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8A5FD0F0-E2B6-4621-8058-E4B4D2E6EF28}</ProjectGuid>
+    <ProjectGuid>{3F5C81A8-4FDA-44E8-8C71-57641B90C2CD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>_3_New_Order_Event</RootNamespace>
     <AssemblyName>3-New-Order-Event</AssemblyName>

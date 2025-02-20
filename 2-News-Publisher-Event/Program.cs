@@ -64,7 +64,7 @@ namespace News_Publisher_Event
             Console.WriteLine($"Content = {article.Content}\n\n\n");
 
         }
-        
+
     }
 
     internal class Program

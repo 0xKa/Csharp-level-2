@@ -8,11 +8,11 @@ namespace Temperature_Change_Event
 {
     public class TemperatureChangedEventArgs : EventArgs
     {
-        public double OldTemperature { get;}
-        public double NewTemperature { get;}
-        public double Difference { get;}
+        public double OldTemperature { get; }
+        public double NewTemperature { get; }
+        public double Difference { get; }
 
-        public TemperatureChangedEventArgs(double OldTemperature, double NewTemperature) 
+        public TemperatureChangedEventArgs(double OldTemperature, double NewTemperature)
         {
             this.OldTemperature = OldTemperature;
             this.NewTemperature = NewTemperature;
@@ -29,8 +29,8 @@ namespace Temperature_Change_Event
 
         public void SetTemperature(double NewTemperature)
         {
-            if (NewTemperature != _CurrentTemp) 
-            { 
+            if (NewTemperature != _CurrentTemp)
+            {
                 _OldTemp = _CurrentTemp;
                 _CurrentTemp = NewTemperature;
                 OnTempChanged(new TemperatureChangedEventArgs(_OldTemp, _CurrentTemp)); //this func will raise the event
@@ -64,7 +64,7 @@ namespace Temperature_Change_Event
     public class Program
     {
         static void Main(string[] args)
-        {   
+        {
             ThermoStat thermoStat = new ThermoStat();
             Display display = new Display();
 

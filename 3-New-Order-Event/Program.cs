@@ -11,8 +11,8 @@ namespace _3_New_Order_Event
         public int OrderID { get; }
         public decimal OrderPrice { get; }
         public string ClientEmail { get; }
-    
-    
+
+
         public OrderEventArgs(int orderID, decimal orderPrice, string clientEmail)
         {
             OrderID = orderID;
@@ -25,13 +25,13 @@ namespace _3_New_Order_Event
     {
         public event EventHandler<OrderEventArgs> NewOrderCreated;
 
-        public void Create(int orderID,  decimal orderPrice, string clientEmail)
+        public void Create(int orderID, decimal orderPrice, string clientEmail)
         {
             Console.WriteLine($"\nNew Order Created for {clientEmail}. Subscribed Services will get notified\n");
 
             //this is another way to invoke the event, instead of using NewOrderCreated?.Invoke()
             if (NewOrderCreated != null)
-            { 
+            {
                 NewOrderCreated(this, new OrderEventArgs(orderID, orderPrice, clientEmail));
             }
             //the best practice is to Invoke it in a Virtual Void funtion suing ?.Invoke()
@@ -41,11 +41,11 @@ namespace _3_New_Order_Event
 
     public class EmailService
     {
-        public void Subscribe (Order order)
+        public void Subscribe(Order order)
         {
             order.NewOrderCreated += Order_NewOrderCreated;
         }
-        public void Unsubscribe (Order order)
+        public void Unsubscribe(Order order)
         {
             order.NewOrderCreated -= Order_NewOrderCreated;
         }
@@ -60,7 +60,7 @@ namespace _3_New_Order_Event
             Console.WriteLine("---------------------------------------\n\n");
         }
     }
-    
+
     public class SMSService
     {
         public void Subscribe(Order order)
@@ -82,7 +82,7 @@ namespace _3_New_Order_Event
             Console.WriteLine("-------------------------------------\n\n");
         }
     }
-    
+
     public class ShippingService
     {
         public void Subscribe(Order order)
@@ -104,7 +104,7 @@ namespace _3_New_Order_Event
             Console.WriteLine("------------------------------------------\n\n");
         }
     }
-    
+
     public class Program
     {
         static void Main(string[] args)
