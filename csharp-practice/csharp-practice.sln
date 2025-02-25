@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9-Nullable-Data-Types", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10-Serialization-and-Deserialization", "..\10-Serialization-and-Deserialization\10-Serialization-and-Deserialization.csproj", "{7AA7DCE2-35DF-49CE-88B8-0087520072BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11-Attributes", "..\11-Attributes\11-Attributes.csproj", "{D5036F1B-0DB6-4001-BD01-D69D03C9B39A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12-Reflection", "..\12-Reflection\12-Reflection.csproj", "{94218381-67ED-43C9-888B-72E523490916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{7AA7DCE2-35DF-49CE-88B8-0087520072BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA7DCE2-35DF-49CE-88B8-0087520072BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA7DCE2-35DF-49CE-88B8-0087520072BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5036F1B-0DB6-4001-BD01-D69D03C9B39A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5036F1B-0DB6-4001-BD01-D69D03C9B39A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5036F1B-0DB6-4001-BD01-D69D03C9B39A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5036F1B-0DB6-4001-BD01-D69D03C9B39A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94218381-67ED-43C9-888B-72E523490916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94218381-67ED-43C9-888B-72E523490916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94218381-67ED-43C9-888B-72E523490916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94218381-67ED-43C9-888B-72E523490916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
