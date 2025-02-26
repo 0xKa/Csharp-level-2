@@ -1,26 +1,307 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MyNamespace;
 
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
+public class MyCustomAttribute : Attribute
+{
+    public string Description { get; }
+
+
+    public MyCustomAttribute(string description = "no description")
+    {
+        Description = description;
+    }
+}
+
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+public class RangeAttribute : Attribute
+{
+    public int Min { get; }
+    public int Max { get; }
+
+    public string ErrorMessage { get; set; }
+
+    public RangeAttribute(int min = 0, int max = 0)
+    {
+        Min = min;
+        Max = max;
+    }
+}
+
+namespace MyNamespace
+{
+    [MyCustom("this is a class")]
+    public class Person
+    {
+        // 🔹 Properties
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        
+        [Range(min: 18, max: 99,  ErrorMessage = "Age must be between 18 and 99")]
+        public int Age { get; set; }
+        
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+
+        // 🔹 Constructor
+        public Person(string firstName, string lastName, int age, string address, string phoneNumber)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+            Address = address;
+            PhoneNumber = phoneNumber;
+        }
+
+        public Person() { }
+
+        // 🔹 Public Methods
+        public void ShortIntroduce()
+        {
+            Console.WriteLine($"Hi, I'm {FirstName}.");
+        }
+
+        [MyCustom("This is the Introduce method")]
+        public void Introduce()
+        {
+            Console.WriteLine($"Hi, I'm {FirstName} {LastName}, and I'm {Age} years old.");
+        }
+
+        public void UpdateAddress(string newAddress)
+        {
+            Address = newAddress;
+            Console.WriteLine($"Address updated to: {Address}");
+        }
+
+        [MyCustom("This is the Call method")]
+        public void Call()
+        {
+            Console.WriteLine($"Calling {PhoneNumber}...");
+        }
+
+        // 🔹 Private Method (Can only be used within this class)
+        private void CalculateBirthYear()
+        {
+            int birthYear = DateTime.Now.Year - Age;
+            Console.WriteLine($"Birth Year: {birthYear}");
+        }
+
+        // 🔹 Public Static Method (Can be called without creating an instance)
+        [MyCustom("...")]
+        public static void DisplayInfoFormat()
+        {
+            Console.WriteLine("Person Format: FirstName, LastName, Age, Address, PhoneNumber");
+        }
+    }
+}
 
 namespace _12_Reflection
 {
-    internal class Program
+    public class Reflection_test
     {
-        static void Main(string[] args)
+        public static void PrintTypeBasicInfo(Type type)
         {
-            Type type = typeof(int);
-
             Console.WriteLine("Type Information:");
             Console.WriteLine($"Name      : {type.Name}");
             Console.WriteLine($"Full Name : {type.FullName}");
             Console.WriteLine($"Base Type : {type.BaseType}");
-            Console.WriteLine($"Is Class  : {type.IsClass}");
+            Console.WriteLine($"Is Class  : {type.IsClass}\n\n");
+        }
+        
+        public static void PrintAssemblyBasicInfo(Assembly assembly)
+        {
+            Console.WriteLine("Assembly Information:");
+            Console.WriteLine($"Full Name  : {assembly.FullName}");
+            Console.WriteLine($"Evidence   : {assembly.Evidence}");
+            Console.WriteLine($"Code Base  : {assembly.CodeBase}");
+            Console.WriteLine($"Location   : {assembly.Location}");
+            Console.WriteLine($"Is Dynamic : {assembly.IsDynamic}\n\n");
+        }
+
+
+        // Formats a list of method parameters as a comma-separated string.
+        private static string GetParameterList(ParameterInfo[] parameters)
+        {
+            return string.Join(", ", parameters.Select(parameter => $"{parameter.ParameterType} {parameter.Name}"));
+        }
+        public  static void Navigate_Library_Using_Reflection()
+        {
+            // 🔹 Get the assembly that contains the System.String type
+            Assembly mscorlib = typeof(string).Assembly;
+
+            // 🔹 Get the Type object representing System.String
+            Type type = mscorlib.GetType("System.String");
+
+            if (type != null)
+            {
+                Console.WriteLine($"\n\nMethods of [{type.FullName}] class:\n");
+
+                // 🔹 Get all public instance(non-static) methods
+                var Methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                    .OrderBy(method => method.Name);
+
+                // 🔹 Iterate through each method and print its details
+                foreach (var method in Methods)
+                {
+                    Console.WriteLine($"\t{method.ReturnType} {method.Name}({GetParameterList(method.GetParameters())})");
+                }
+
+
+            }
+            else
+                Console.WriteLine("System.String type not found.");
+
+
+        }
+
+        public static void Navigate_Class_Using_Reflection(Type myClass)
+        {
+            if (myClass == null || !myClass.IsClass)
+                return;
+
+            Console.WriteLine($"Class Name: {myClass.Name}");
+            Console.WriteLine($"Full Name: {myClass.FullName}");
+
+
+            // Get the properties of MyClass
+            Console.WriteLine($"\n-Properties:");
+            foreach (var property in myClass.GetProperties())
+            {
+                Console.WriteLine($"\tProperty Name: {property.Name}, Type: [{property.PropertyType}]");
+            }
+
+            // Get the methods of MyClass
+            Console.WriteLine("\n-Methods:");
+            foreach (var method in myClass.GetMethods())
+            {
+                Console.WriteLine($"\t{method.ReturnType} {method.Name}({GetParameterList(method.GetParameters())})");
+            }
+
+
+
+        }
+
+        public static void Control_Person_Class_Using_Reflection()
+        {
+            Type type = typeof(Person);
+
+            // Create an instance of Person
+            object PersonInstance = Activator.CreateInstance(type);
+
+            // Set the value of FirstName using reflection
+            Console.WriteLine("\nFirstName Property is Set to 'Reda' using reflection.");
+            type.GetProperty("FirstName").SetValue(PersonInstance, "Reda");
+
+
+            // Get the value of FirstName using reflection
+            Console.WriteLine("\nGetting FirstName is value using reflection:");
+            string FirstNameValue = (string)type.GetProperty("FirstName").GetValue(PersonInstance);
+            Console.WriteLine($"FirstName Value: {FirstNameValue}");
+
+
+            //now how to execute methods using reflection:
+            Console.WriteLine("\nExecuting Methods using reflection:");
+
+            // Invoke the ShortIntroduce method using reflection
+            type.GetMethod("ShortIntroduce").Invoke(PersonInstance, null);
+
+            // Invoke UpdateAddress with parameters using reflection
+            object[] parameters = { "Earth" };
+            type.GetMethod("UpdateAddress").Invoke(PersonInstance, parameters);
+        }
+
+        public static void Reflection_with_Custom_Attributes()
+        {
+            Type type = typeof (Person);
+
+            //get class-level attribute 
+            object[] classAttributes = type.GetCustomAttributes(typeof(MyCustomAttribute), false);
+            foreach (MyCustomAttribute attribute in classAttributes)
+            {
+                Console.WriteLine($"Class Attributes Description: [{attribute.Description}] ");
+            }
+            //get method-level attribute 
+            MethodInfo methodInfo = type.GetMethod("Call");
+            object[] methodAttributes = methodInfo.GetCustomAttributes(typeof(MyCustomAttribute), false);
+            foreach (MyCustomAttribute attribute in methodAttributes)
+            {
+                Console.WriteLine($"Method Attributes Description: [{attribute.Description}] ");
+            }
+
+        }
+
+    }
+
+    public class RangeAttribute_test
+    {
+        private static bool ValidatePerson(Person person)
+        {
+            Type type = typeof(Person);
+            PropertyInfo[] propertyInfos = type.GetProperties();
+
+            foreach (PropertyInfo property in propertyInfos)
+            {
+                //check for RangeAttribute on properties
+                if (Attribute.IsDefined(property, typeof(RangeAttribute)))
+                {
+                    RangeAttribute rangeAttribute = (RangeAttribute) Attribute.GetCustomAttribute(property, typeof(RangeAttribute));
+                    int value = (int)property.GetValue(person);
+
+                    //validation
+                    if (value < rangeAttribute.Min || value > rangeAttribute.Max)
+                    {
+                        Console.WriteLine($"Validation Faild for property '{property.Name}'.");
+                        Console.WriteLine($"Error Message: '{rangeAttribute.ErrorMessage}'.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static void Show()
+        {
+            Person person = new Person("reda", "hilal", 100, "oman", "12341234");
+
+            if ( ValidatePerson(person) )
+                Console.WriteLine("Person is Valid.");
+            else
+                Console.WriteLine("Person is not Valid.");
+        }
+    }
+
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Type type = typeof(Person);
+
+            //Reflection_test.PrintTypeBasicInfo( type );
+
+            //Reflection_test.PrintAssemblyBasicInfo( type.Assembly );
+
+            //Reflection_test.Navigate_Library_Using_Reflection();
+
+            //Reflection_test.Navigate_Class_Using_Reflection(typeof(Person));
+
+            //Reflection_test.Control_Person_Class_Using_Reflection();
+
+            //Reflection_test.Reflection_with_Custom_Attributes();
+
+            //RangeAttribute_test.Show();
 
             Console.Read();
+        
+
         }
     }
 }

@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11-Attributes", "..\11-Attr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12-Reflection", "..\12-Reflection\12-Reflection.csproj", "{94218381-67ED-43C9-888B-72E523490916}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "13-Generics", "..\13-Generics\13-Generics.csproj", "{3121B4DF-C29B-48C6-8F99-2CF7753F62D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14-Windows-Registry", "..\14-Windows-Registry\14-Windows-Registry.csproj", "{C85C27FF-CBF4-46B7-BF12-C9BE0B2E850F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{94218381-67ED-43C9-888B-72E523490916}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94218381-67ED-43C9-888B-72E523490916}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94218381-67ED-43C9-888B-72E523490916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3121B4DF-C29B-48C6-8F99-2CF7753F62D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3121B4DF-C29B-48C6-8F99-2CF7753F62D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3121B4DF-C29B-48C6-8F99-2CF7753F62D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3121B4DF-C29B-48C6-8F99-2CF7753F62D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C85C27FF-CBF4-46B7-BF12-C9BE0B2E850F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85C27FF-CBF4-46B7-BF12-C9BE0B2E850F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85C27FF-CBF4-46B7-BF12-C9BE0B2E850F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85C27FF-CBF4-46B7-BF12-C9BE0B2E850F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
